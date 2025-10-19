@@ -24,10 +24,33 @@ class UserFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
-            'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
+            'nameEnglish' => fake()->name(),
+            'nameArabic' => fake()->name(),
+            'nationalId' => fake()->numerify('##############'),
+            'company' => fake()->company(),
+            'workType' => fake()->randomElement(['Full Time', 'Part Time', 'Contract']),
+            'companyCode' => fake()->bothify('??###'),
+            'location' => fake()->city(),
+            'telephone' => fake()->phoneNumber(),
+            'telephone2' => fake()->optional()->phoneNumber(),
+            'startDate' => fake()->optional()->date(),
+            'birthDate' => fake()->optional()->date(),
+            'jobTitle' => fake()->jobTitle(),
+            'education' => fake()->randomElement(['Bachelor Degree', 'Master Degree', 'PhD', 'High School']),
+            'area' => fake()->optional()->city(),
+            'vp' => fake()->optional()->name(),
+            'hr' => fake()->boolean(20),
+            'dataChecked' => fake()->boolean(50),
+            'photoDone' => fake()->boolean(50),
+            'idDone' => fake()->boolean(50),
+            'allThingsDone' => fake()->boolean(30),
+            'out' => fake()->boolean(10),
+            'leaveDate' => fake()->optional()->date(),
+            'reasonOfLeaving' => fake()->optional()->sentence(),
+            'address' => fake()->optional()->address(),
+            'notes' => fake()->optional()->paragraph(),
             'remember_token' => Str::random(10),
         ];
     }
@@ -38,7 +61,7 @@ class UserFactory extends Factory
     public function unverified(): static
     {
         return $this->state(fn (array $attributes) => [
-            'email_verified_at' => null,
+            // No email_verified_at field in our schema
         ]);
     }
 }
